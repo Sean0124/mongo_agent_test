@@ -1,0 +1,22 @@
+language: python
+
+python:
+  - 2.6
+  - 2.7
+  - 3.4
+  - 3.5
+  - 3.6
+  - pypy
+  - pypy3
+
+services:
+  - mongodb
+
+script: PYMONGO_MUST_CONNECT=1 python setup.py test
+
+install:
+    # Temporary solution for Travis CI multiprocessing issue #943
+    # https://github.com/travis-ci/travis-ci/issues/943
+    - sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
+    # Work around https://github.com/travis-ci/travis-ci/issues/5485
+    - travis_retry pip install setuptools==29.0.1
